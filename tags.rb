@@ -17,7 +17,7 @@ module Nanoc::Helpers
     end
 
     replace_tag :glyph do |ids, opts|
-        "<span class='glyphicon #{ids.map{|id| "glyphicon-#{id}"}.join(" ")}' />"
+        "<i class='fa #{ids.map{|id| "fa-#{id}"}.join(" ")}'></i>"
     end
 
     replace_tag :label, class: "default" do |ids, opts|
@@ -36,6 +36,15 @@ module Nanoc::Helpers
 
     replace_tag :end_alert do |ids, opts|
       "</div>"
+    end
+
+    replace_tag :collapse do |ids, opts|
+        Nanoc::Helpers::skip_replacement "One id is required" unless ids.length > 0
+      "<p><button class='btn btn-primary' type='button' data-toggle='collapse' data-target='##{ids[0]}' aria-expanded='false' aria-controls='#{ids[0]}'>#{opts[:title]}</button></p><div class='collapse' id='#{ids[0]}'><div class='card card-body' markdown='1'>\n"
+    end
+
+    replace_tag :end_collapse do |ids, opts|
+      "\n</div></div>\n"
     end
 
     replace_tag :single_accordion, class: "panel-default" do |ids, opts|
